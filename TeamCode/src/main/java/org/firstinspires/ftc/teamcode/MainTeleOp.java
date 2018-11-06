@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -12,6 +13,9 @@ import com.qualcomm.robotcore.util.Range;
 public class MainTeleOp extends OpMode {
     private DcMotor motorLeft;
     private DcMotor motorRight;
+    private DcMotor intakeMotor;
+
+    private Servo intakeLiftServo;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -23,6 +27,13 @@ public class MainTeleOp extends OpMode {
         //Driving
         motorLeft = hardwareMap.dcMotor.get("motorLeft");
         motorRight = hardwareMap.dcMotor.get("motorRight");
+
+        //Intake Motor
+        intakeMotor = hardwareMap.dcMotor.get("intakeMotor");
+
+        //Intake Lift Motor
+        intakeLiftServo = hardwareMap.servo.get("intakeLiftServo");
+
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -50,6 +61,22 @@ public class MainTeleOp extends OpMode {
         //Driving
         motorRight.setPower(-gamepad1.right_stick_y);
         motorLeft.setPower(gamepad1.left_stick_y);
+
+        //Spinning Collector Motor
+        if(gamepad1.a) {
+            intakeMotor.setPower(0.75);
+        }
+        else {
+            intakeMotor.setPower(0);
+        }
+
+        //Intake Lift Servo
+        if(gamepad1.right_bumper) {
+            intakeLiftServo.setPosition(1);
+        }
+        if(gamepad1.left_bumper) {
+            intakeLiftServo.setPosition(0);
+        }
     }
 
     /*
