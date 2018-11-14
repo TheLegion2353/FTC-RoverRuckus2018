@@ -56,11 +56,29 @@ public class MainTeleOp extends OpMode {
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
+
+    int i = 0;
+
     @Override
     public void loop() {
+        i++;
+
         //Driving
         motorRight.setPower(-gamepad1.right_stick_y);
         motorLeft.setPower(gamepad1.left_stick_y);
+
+        if(i % 25 == 0) {
+            //Intake Lift Servo
+            if (gamepad1.right_bumper) {
+                intakeLiftServo.setPosition(1);
+            }
+            else if (gamepad1.left_bumper) {
+                intakeLiftServo.setPosition(0);
+            }
+            else {
+                intakeLiftServo.setPosition(0.5);
+            }
+        }
 
         //Spinning Collector Motor
         if(gamepad1.a) {
@@ -68,14 +86,6 @@ public class MainTeleOp extends OpMode {
         }
         else {
             intakeMotor.setPower(0);
-        }
-
-        //Intake Lift Servo
-        if(gamepad1.right_bumper) {
-            intakeLiftServo.setPosition(1);
-        }
-        if(gamepad1.left_bumper) {
-            intakeLiftServo.setPosition(0);
         }
     }
 
