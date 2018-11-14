@@ -15,7 +15,8 @@ public class MainTeleOp extends OpMode {
     private DcMotor motorRight;
     private DcMotor intakeMotor;
 
-    private Servo intakeLiftServo;
+    private Servo intakeLiftServoRight;
+    private Servo intakeLiftServoLeft;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -32,7 +33,8 @@ public class MainTeleOp extends OpMode {
         intakeMotor = hardwareMap.dcMotor.get("intakeMotor");
 
         //Intake Lift Motor
-        intakeLiftServo = hardwareMap.servo.get("intakeLiftServo");
+        intakeLiftServoRight = hardwareMap.servo.get("intakeLiftServoRight");
+        intakeLiftServoLeft = hardwareMap.servo.get("intakeLiftServoLeft");
 
 
         // Tell the driver that initialization is complete.
@@ -70,13 +72,16 @@ public class MainTeleOp extends OpMode {
         if(i % 25 == 0) {
             //Intake Lift Servo
             if (gamepad1.right_bumper) {
-                intakeLiftServo.setPosition(1);
+                intakeLiftServoRight.setPosition(1);
+                intakeLiftServoLeft.setPosition(1);
             }
             else if (gamepad1.left_bumper) {
-                intakeLiftServo.setPosition(0);
+                intakeLiftServoRight.setPosition(0);
+                intakeLiftServoLeft.setPosition(0);
             }
             else {
-                intakeLiftServo.setPosition(0.5);
+                intakeLiftServoRight.setPosition(0.5);
+                intakeLiftServoLeft.setPosition(0.5);
             }
         }
 

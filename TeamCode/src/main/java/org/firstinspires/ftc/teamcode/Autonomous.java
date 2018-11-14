@@ -15,7 +15,8 @@ public class Autonomous extends OpMode {
     private DcMotor motorRight;
     private DcMotor intakeMotor;
 
-    private Servo intakeLiftServo;
+    private Servo intakeLiftServoRight;
+    private Servo intakeLiftServoLeft;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -32,7 +33,8 @@ public class Autonomous extends OpMode {
         intakeMotor = hardwareMap.dcMotor.get("intakeMotor");
 
         //Intake Lift Motor
-        intakeLiftServo = hardwareMap.servo.get("intakeLiftServo");
+        intakeLiftServoRight = hardwareMap.servo.get("intakeLiftServoRight");
+        intakeLiftServoLeft = hardwareMap.servo.get("intakeLiftServoLeft");
 
 
         // Tell the driver that initialization is complete.
@@ -51,6 +53,7 @@ public class Autonomous extends OpMode {
      */
     @Override
     public void start() {
+        //This is where you'll do the autonomous programming
     }
 
     /*
@@ -58,7 +61,6 @@ public class Autonomous extends OpMode {
      */
     @Override
     public void loop() {
-        //This is where you'll do the autonomous programming
     }
 
     /*
