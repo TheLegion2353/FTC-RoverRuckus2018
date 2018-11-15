@@ -73,11 +73,11 @@ public class MainTeleOp extends OpMode {
             //Intake Lift Servo
             if (gamepad1.right_bumper) {
                 intakeLiftServoRight.setPosition(1);
-                intakeLiftServoLeft.setPosition(1);
+                intakeLiftServoLeft.setPosition(0);
             }
             else if (gamepad1.left_bumper) {
                 intakeLiftServoRight.setPosition(0);
-                intakeLiftServoLeft.setPosition(0);
+                intakeLiftServoLeft.setPosition(1);
             }
             else {
                 intakeLiftServoRight.setPosition(0.5);
