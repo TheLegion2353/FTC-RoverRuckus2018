@@ -87,9 +87,12 @@ public class MainTeleOp extends OpMode {
 
         //Spinning Collector Motor
         if(gamepad1.a) {
-            intakeMotor.setPower(0.75);
+            //Set power to negative to make the things go in.
+            intakeMotor.setPower(-0.75);
         }
-        else {
+        else if (gamepad1.b){
+            intakeMotor.setPower(0.75);
+        } else {
             intakeMotor.setPower(0);
         }
     }
