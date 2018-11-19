@@ -86,13 +86,15 @@ public class MainTeleOp extends OpMode {
         }
 
         //Spinning Collector Motor
-        if(gamepad1.a) {
+        if(gamepad1.a) { //When A is pressed.
             //Set power to negative to make the things go in.
             intakeMotor.setPower(-0.75);
         }
-        else if (gamepad1.b){
-            intakeMotor.setPower(0.75);
+        else if (gamepad1.b){ //When B is pressed.
+            //Set power to positive to make the motor force thing out, just in case something gets stuck.
+            intakeMotor.setPower(1);
         } else {
+            //When nothing is being pressed, the motor stops moving.
             intakeMotor.setPower(0);
         }
     }
