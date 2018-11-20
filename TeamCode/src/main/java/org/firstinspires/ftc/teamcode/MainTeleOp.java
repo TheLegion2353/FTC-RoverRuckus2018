@@ -11,10 +11,13 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Main TeleOp", group="TeleOp")
 public class MainTeleOp extends OpMode {
+    //DC Motors
     private DcMotor motorLeft;
     private DcMotor motorRight;
     private DcMotor intakeMotor;
-
+    private DcMotor motorElevate;
+    //Servos
+    private Servo elevatePlatformServo;
     private Servo intakeLiftServoRight;
     private Servo intakeLiftServoLeft;
 
@@ -96,6 +99,25 @@ public class MainTeleOp extends OpMode {
         } else {
             //When nothing is being pressed, the motor stops moving.
             intakeMotor.setPower(0);
+        }
+
+        //Intake Platform Elevator
+        if (gamepad1.right_trigger != 0) {
+            motorElevate.setPower(1.00);
+        } else if (gamepad1.left_trigger != 0) {
+            motorElevate.setPower(-1.00);
+        } else {
+            motorElevate.setPower(0);
+        }
+
+        if (gamepad1.x) {
+            //When X is pressed, the servo rotates.
+            elevatePlatformServo.setPosition(1);
+        } else if (gamepad1.y) {
+            //When Y is pressed, the servo rotates.
+            elevatePlatformServo.setPosition(0);
+        } else {
+            elevatePlatformServo.setPosition(0.5);
         }
     }
 
