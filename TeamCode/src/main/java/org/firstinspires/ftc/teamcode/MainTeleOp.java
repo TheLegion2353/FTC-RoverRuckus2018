@@ -39,6 +39,11 @@ public class MainTeleOp extends OpMode {
         intakeLiftServoRight = hardwareMap.servo.get("intakeLiftServoRight");
         intakeLiftServoLeft = hardwareMap.servo.get("intakeLiftServoLeft");
 
+        //Elevator Servo
+        elevatePlatformServo = hardwareMap.servo.get("elevatePlatformServo");
+
+        //Elevator Motor
+        motorElevate = hardwareMap.dcMotor.get("motorElevate");
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
