@@ -54,23 +54,14 @@ public class GeeoonAutonomous extends OpMode {
     @Override
     public void start() {
         //This is where you'll do the autonomous programming.
-        //The motor turns clockwise
-        motorLeft.setPower(0.5);
-        motorRight.setPower(0.5);
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException e) {
-
-        }
-        //The robot turns left.
+        turnRight();
+        /*
+        moveForward(500);
         turnLeft();
-        motorLeft.setPower(0.5);
-        motorRight.setPower(0.5);
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException e) {
-
-        }
+        moveForward(500);
+        turnRight();
+        moveForward(500);
+        */
     }
 
     /*
@@ -78,6 +69,7 @@ public class GeeoonAutonomous extends OpMode {
      */
     @Override
     public void loop() {
+
     }
 
     /*
@@ -85,14 +77,24 @@ public class GeeoonAutonomous extends OpMode {
      */
     @Override
     public void stop() {
+
     }
 
     //This method makes the robot do a 90 left turn.
+    public void moveForward (long time) {
+        motorLeft.setPower(0.5);
+        motorRight.setPower(0.5);
+        try {
+            Thread.sleep(time);
+        } catch(InterruptedException e) {
+
+        }
+    }
     public void turnLeft() {
         //The left motor is set to go backwards.
-        motorLeft.setPower(-0.5);
+        motorLeft.setPower(-0.1);
         //The right motor is set to go forwards.
-        motorRight.setPower(0.5);
+        motorRight.setPower(0.1);
         //Makes the code halt for a second so that the motor have time to spin.
         try {
             Thread.sleep(1000);
@@ -106,9 +108,9 @@ public class GeeoonAutonomous extends OpMode {
 
     public void turnRight() {
         //The left motor is set to go backwards.
-        motorLeft.setPower(0.5);
+        motorLeft.setPower(0.1);
         //The right motor is set to go forwards.
-        motorRight.setPower(-0.5);
+        motorRight.setPower(-0.1);
         //Makes the code halt for a second so that the motor have time to spin.
         try {
             Thread.sleep(1000);
