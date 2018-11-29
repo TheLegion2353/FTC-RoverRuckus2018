@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -17,10 +18,9 @@ public class MainTeleOp extends OpMode {
     private DcMotor intakeMotor;
     private DcMotor motorElevate;
     //Servos
-    private Servo elevatePlatformServo;
     private Servo intakeLiftServoRight;
     private Servo intakeLiftServoLeft;
-
+    private Servo depositorServo;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -39,8 +39,8 @@ public class MainTeleOp extends OpMode {
         intakeLiftServoRight = hardwareMap.servo.get("intakeLiftServoRight");
         intakeLiftServoLeft = hardwareMap.servo.get("intakeLiftServoLeft");
 
-        //Elevator Servo
-        elevatePlatformServo = hardwareMap.servo.get("elevatePlatformServo");
+        //Depositor Servo
+        depositorServo = hardwareMap.servo.get("depositorServo");
 
         //Elevator Motor
         motorElevate = hardwareMap.dcMotor.get("motorElevate");
@@ -91,6 +91,17 @@ public class MainTeleOp extends OpMode {
                 intakeLiftServoRight.setPosition(0.5);
                 intakeLiftServoLeft.setPosition(0.5);
             }
+
+            //Depositor Servo
+            if(gamepad1.dpad_up) {
+                depositorServo.setPosition(0.75);
+            }
+            else if(gamepad1.dpad_down) {
+                depositorServo.setPosition(0.25);
+            }
+            else {
+                depositorServo.setPosition(0.5);
+            }
         }
 
         //Spinning Collector Motor
@@ -98,7 +109,7 @@ public class MainTeleOp extends OpMode {
             //Set power to negative to make the things go in.
             intakeMotor.setPower(-0.75);
         }
-        else if (gamepad1.b){ //When B is pressed.
+        else if (gamepad1.x){ //When X is pressed.
             //Set power to positive to make the motor force thing out, just in case something gets stuck.
             intakeMotor.setPower(1);
         } else {
@@ -107,23 +118,18 @@ public class MainTeleOp extends OpMode {
         }
 
         //Intake Platform Elevator
-        if (gamepad1.right_trigger != 0) {
-            motorElevate.setPower(1.00);
-        } else if (gamepad1.left_trigger != 0) {
-            motorElevate.setPower(-1.00);
-        } else {
-            motorElevate.setPower(0);
+        if (motorElevate.getCurrentPosition() > 0) {
+            motorElevate.setPower(-gamepad1.right_trigger);
+        }
+        else if(motorElevate.getCurrentPosition() < -3250) {
+            motorElevate.setPower(gamepad1.left_trigger);
+        }
+        else {
+            motorElevate.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
         }
 
-        if (gamepad1.x) {
-            //When X is pressed, the servo rotates.
-            elevatePlatformServo.setPosition(1);
-        } else if (gamepad1.y) {
-            //When Y is pressed, the servo rotates.
-            elevatePlatformServo.setPosition(0);
-        } else {
-            elevatePlatformServo.setPosition(0.5);
-        }
+        telemetry.addData("Position", motorElevate.getCurrentPosition());
+        telemetry.update();
     }
 
     /*
