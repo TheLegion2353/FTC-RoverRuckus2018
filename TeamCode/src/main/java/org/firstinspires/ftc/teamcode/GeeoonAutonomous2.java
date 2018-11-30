@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="GeeoonAutonomous", group="GeeoonAutonomous")
-public class GeeoonAutonomous extends OpMode {
+@TeleOp(name="GeeoonAutonomous2", group="GeeoonAutonomous")
+public class GeeoonAutonomous2 extends OpMode {
     private DcMotor motorLeft;
     private DcMotor motorRight;
     private DcMotor intakeMotor;
@@ -57,7 +57,7 @@ public class GeeoonAutonomous extends OpMode {
     public void start() {
         //This is where you'll do the autonomous programming.
         /*
-        For every 100ms, the robot moves about 10 inches.
+        For every 100ms, the robot moves about inches.
         For every 200ms, the robot moves about inches.
         For every 300ms, the robot moves about inches.
 
@@ -65,10 +65,9 @@ public class GeeoonAutonomous extends OpMode {
 
         moveForward(320);
         turnLeft90();
-        moveForward(350);
-        turnRight(135);
-        moveForward(410);
-        intakeSpit();
+        moveForward(400);
+        turnLeft(25);
+        moveForward(450);
 
     }
 
@@ -89,7 +88,7 @@ public class GeeoonAutonomous extends OpMode {
     }
 
     //This method makes the robot move forward for a specific amount of time in miliseconds.
-    public void intakeElevate () {
+    public void intakeElevate() {
         i++;
         if (i % 25 == 0) {
 
@@ -100,18 +99,19 @@ public class GeeoonAutonomous extends OpMode {
             i = 0;
         }
     }
-    public void turnLeft (double degrees) {
+
+    public void turnLeft(double degrees) {
         //The left motor is set to go backwards.
         motorLeft.setPower(1);
         //The right motor is set to go forwards.
         motorRight.setPower(1);
         //Converts degrees to miliseconds of turning.
-        degrees = 3.7*degrees;
+        degrees = 3.7 * degrees;
         long time = (long) degrees;
         //Makes the code halt so that the motor have time to spin.
         try {
             Thread.sleep(time);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
@@ -122,24 +122,24 @@ public class GeeoonAutonomous extends OpMode {
         //Give time to let the motor come to a full stop
         try {
             Thread.sleep(100);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
     }
 
-    public void turnRight (double degrees) {
+    public void turnRight(double degrees) {
         //The left motor is set to go backwards.
         motorLeft.setPower(1);
         //The right motor is set to go forwards.
         motorRight.setPower(1);
         //Converts degrees to miliseconds of turning.
-        degrees = 3.7*degrees;
+        degrees = 3.7 * degrees;
         long time = (long) degrees;
         //Makes the code halt so that the motor have time to spin.
         try {
             Thread.sleep(time);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
@@ -150,55 +150,59 @@ public class GeeoonAutonomous extends OpMode {
         //Give time to let the motor come to a full stop
         try {
             Thread.sleep(100);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
     }
 
-    public void intakeSpit () {
+    public void intakeSpit() {
         intakeMotor.setPower(0.75);
         try {
-            Thread.sleep(1000);
-        } catch(InterruptedException e) {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
             intakeMotor.setPower(0);
         }
         intakeMotor.setPower(0);
     }
-    public void intakeSuck () {
+
+    public void intakeSuck() {
         intakeMotor.setPower(-0.75);
         try {
-            Thread.sleep(1000);
-        } catch(InterruptedException e) {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
             intakeMotor.setPower(0);
         }
         intakeMotor.setPower(0);
     }
-    public void moveForward (long time) {
+
+    public void moveForward(long time) {
         motorLeft.setPower(-1);
         motorRight.setPower(1);
         try {
             Thread.sleep(time);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
         motorLeft.setPower(0);
         motorRight.setPower(0);
     }
+
     //This method makes the robot move backward for a specific amount of time in miliseconds.
-    public void moveBackward (long time) {
+    public void moveBackward(long time) {
         motorLeft.setPower(1);
         motorRight.setPower(-1);
         try {
             Thread.sleep(time);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
         motorLeft.setPower(0);
         motorRight.setPower(0);
     }
+
     //This method makes the robot do a 90 degree left turn.
     public void turnLeft90() {
         //The left motor is set to go backwards.
@@ -208,7 +212,7 @@ public class GeeoonAutonomous extends OpMode {
         //Makes the code halt for a second so that the motor have time to spin.
         try {
             Thread.sleep(333);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
@@ -219,11 +223,12 @@ public class GeeoonAutonomous extends OpMode {
         //Give time to let the motor come to a full stop
         try {
             Thread.sleep(100);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
     }
+
     //This method makes the robot do a 90 degree right turn.
     public void turnRight90() {
         //The left motor is set to go backwards.
@@ -233,7 +238,7 @@ public class GeeoonAutonomous extends OpMode {
         //Makes the code halt for a second so that the motor have time to spin.
         try {
             Thread.sleep(333);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
@@ -244,7 +249,7 @@ public class GeeoonAutonomous extends OpMode {
         //Give time to let the motor come to a full stop
         try {
             Thread.sleep(100);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             motorLeft.setPower(0);
             motorRight.setPower(0);
         }
