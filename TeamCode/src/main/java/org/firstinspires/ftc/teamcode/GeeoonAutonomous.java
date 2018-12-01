@@ -7,17 +7,21 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
+/*
+    This program is for when your robot faces towards from the deposit spot.
+ */
 
 @TeleOp(name="GeeoonAutonomous", group="GeeoonAutonomous")
 public class GeeoonAutonomous extends OpMode {
+    //DC Motors
     private DcMotor motorLeft;
     private DcMotor motorRight;
     private DcMotor intakeMotor;
-
+    private DcMotor motorElevate;
+    //Servos
     private Servo intakeLiftServoRight;
     private Servo intakeLiftServoLeft;
-
+    private Servo depositorServo;
     public int i;
 
     /*
@@ -38,6 +42,11 @@ public class GeeoonAutonomous extends OpMode {
         intakeLiftServoRight = hardwareMap.servo.get("intakeLiftServoRight");
         intakeLiftServoLeft = hardwareMap.servo.get("intakeLiftServoLeft");
 
+        //Depositor Servo
+        depositorServo = hardwareMap.servo.get("depositorServo");
+
+        //Elevator Motor
+        motorElevate = hardwareMap.dcMotor.get("motorElevate");
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -77,7 +86,65 @@ public class GeeoonAutonomous extends OpMode {
      */
     @Override
     public void loop() {
+        i++;
 
+        //Driving
+        motorRight.setPower(-gamepad1.right_stick_y);
+        motorLeft.setPower(gamepad1.left_stick_y);
+
+        if(i % 25 == 0) {
+            //Intake Lift Servo
+            if (gamepad1.right_bumper) {
+                intakeLiftServoRight.setPosition(1);
+                intakeLiftServoLeft.setPosition(0);
+            }
+            else if (gamepad1.left_bumper) {
+                intakeLiftServoRight.setPosition(0);
+                intakeLiftServoLeft.setPosition(1);
+            }
+            else {
+                intakeLiftServoRight.setPosition(0.5);
+                intakeLiftServoLeft.setPosition(0.5);
+            }
+
+            //Depositor Servo
+            if(gamepad1.dpad_up) {
+                depositorServo.setPosition(0.75);
+            }
+            else if(gamepad1.dpad_down) {
+                depositorServo.setPosition(0.25);
+            }
+            else {
+                depositorServo.setPosition(0.5);
+            }
+        }
+
+        //Spinning Collector Motor
+        if(gamepad1.a) { //When A is pressed.
+            //Set power to negative to make the things go in.
+            intakeMotor.setPower(-0.75);
+        }
+        else if (gamepad1.x){ //When X is pressed.
+            //Set power to positive to make the motor force thing out, just in case something gets stuck.
+            intakeMotor.setPower(1);
+        } else {
+            //When nothing is being pressed, the motor stops moving.
+            intakeMotor.setPower(0);
+        }
+
+        //Intake Platform Elevator
+        if (motorElevate.getCurrentPosition() > 0) {
+            motorElevate.setPower(-gamepad1.right_trigger);
+        }
+        else if(motorElevate.getCurrentPosition() < -3250) {
+            motorElevate.setPower(gamepad1.left_trigger);
+        }
+        else {
+            motorElevate.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
+        }
+
+        telemetry.addData("Position", motorElevate.getCurrentPosition());
+        telemetry.update();
     }
 
     /*
@@ -105,7 +172,7 @@ public class GeeoonAutonomous extends OpMode {
         motorLeft.setPower(1);
         //The right motor is set to go forwards.
         motorRight.setPower(1);
-        //Converts degrees to miliseconds of turning.
+        //Converts degrees to milliseconds of turning.
         degrees = 3.7*degrees;
         long time = (long) degrees;
         //Makes the code halt so that the motor have time to spin.
@@ -133,7 +200,7 @@ public class GeeoonAutonomous extends OpMode {
         motorLeft.setPower(1);
         //The right motor is set to go forwards.
         motorRight.setPower(1);
-        //Converts degrees to miliseconds of turning.
+        //Converts degrees to milliseconds of turning.
         degrees = 3.7*degrees;
         long time = (long) degrees;
         //Makes the code halt so that the motor have time to spin.
