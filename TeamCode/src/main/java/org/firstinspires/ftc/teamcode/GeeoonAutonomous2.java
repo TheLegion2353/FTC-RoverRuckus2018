@@ -77,6 +77,7 @@ public class GeeoonAutonomous2 extends OpMode {
         moveForward(400);
         turnLeft(25);
         moveForward(450);
+        intakeDrop();
         intakeSpit();
     }
 
@@ -167,6 +168,17 @@ public class GeeoonAutonomous2 extends OpMode {
         }
     }
 
+    public void intakeDrop () {
+        intakeLiftServoRight.setPosition(0);
+        intakeLiftServoLeft.setPosition(1);
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            motorLeft.setPower(0);
+            motorRight.setPower(0);
+        }
+    }
+
     public void turnLeft(double degrees) {
         //The left motor is set to go backwards.
         motorLeft.setPower(1);
@@ -226,7 +238,7 @@ public class GeeoonAutonomous2 extends OpMode {
     public void intakeSpit() {
         intakeMotor.setPower(0.75);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             intakeMotor.setPower(0);
         }
@@ -236,7 +248,7 @@ public class GeeoonAutonomous2 extends OpMode {
     public void intakeSuck() {
         intakeMotor.setPower(-0.75);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             intakeMotor.setPower(0);
         }
