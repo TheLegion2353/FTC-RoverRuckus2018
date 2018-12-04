@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -11,7 +12,7 @@ import com.qualcomm.robotcore.util.Range;
     This program is for when your robot faces towards from the deposit spot.
  */
 
-@TeleOp(name="GeeoonAutonomous", group="GeeoonAutonomous")
+@Autonomous(name="GeeoonAutonomous", group="GeeoonAutonomous")
 public class GeeoonAutonomous extends OpMode {
     //DC Motors
     private DcMotor motorLeft;
@@ -174,8 +175,8 @@ public class GeeoonAutonomous extends OpMode {
     }
 
     public void intakeDrop () {
-        intakeLiftServoRight.setPosition(0);
-        intakeLiftServoLeft.setPosition(1);
+        intakeLiftServoRight.setPosition(1);
+        intakeLiftServoLeft.setPosition(0);
         try {
             Thread.sleep(1000);
         } catch(InterruptedException e) {

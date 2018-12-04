@@ -94,10 +94,10 @@ public class MainTeleOp extends OpMode {
 
             //Depositor Servo
             if(gamepad1.dpad_up) {
-                depositorServo.setPosition(0.75);
+                depositorServo.setPosition(0.6);
             }
             else if(gamepad1.dpad_down) {
-                depositorServo.setPosition(0.25);
+                depositorServo.setPosition(0.4);
             }
             else {
                 depositorServo.setPosition(0.5);
