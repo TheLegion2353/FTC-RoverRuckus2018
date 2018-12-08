@@ -91,7 +91,7 @@ public class MainTeleOp extends OpMode {
                 intakeLiftServoRight.setPosition(0.5);
                 intakeLiftServoLeft.setPosition(0.5);
             }
-
+            /*
             //Depositor Servo
             if(gamepad1.dpad_up) {
                 depositorServo.setPosition(0.6);
@@ -102,21 +102,14 @@ public class MainTeleOp extends OpMode {
             else {
                 depositorServo.setPosition(0.5);
             }
+            */
         }
 
         //Spinning Collector Motor
-        if(gamepad1.a) { //When A is pressed.
-            //Set power to negative to make the things go in.
-            intakeMotor.setPower(-0.75);
-        }
-        else if (gamepad1.x){ //When X is pressed.
-            //Set power to positive to make the motor force thing out, just in case something gets stuck.
-            intakeMotor.setPower(1);
-        } else {
-            //When nothing is being pressed, the motor stops moving.
-            intakeMotor.setPower(0);
-        }
+        //Set power to negative to make the things go in, positive to make things go out.
+        intakeMotor.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
 
+        /*
         //Intake Platform Elevator
         if (motorElevate.getCurrentPosition() > 0) {
             motorElevate.setPower(-gamepad1.right_trigger);
@@ -130,6 +123,7 @@ public class MainTeleOp extends OpMode {
 
         telemetry.addData("Position", motorElevate.getCurrentPosition());
         telemetry.update();
+        */
     }
 
     /*
