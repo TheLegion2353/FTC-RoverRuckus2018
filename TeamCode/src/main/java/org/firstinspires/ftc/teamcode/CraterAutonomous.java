@@ -67,13 +67,13 @@ public class CraterAutonomous extends LinearOpMode {
 
         move(11.13);
         turn(90);
-        //move(49.85);
-        //turn(45);
-        //move(35.25);
+        move(49.85);
+        turn(45);
+        move(35.25);
         //intakeDrop();
         //intakeSpit();
-        //turn(360);
-        //move(94);
+        turn(360);
+        move(94);
 
         while(opModeIsActive()) {
             telemetry.addData("Position", motorLeft.getCurrentPosition());

@@ -15,12 +15,12 @@ public class MainTeleOp extends OpMode {
     //DC Motors
     private DcMotor motorLeft;
     private DcMotor motorRight;
-    private DcMotor intakeMotor;
-    private DcMotor motorElevate;
+    private DcMotor intakeMotorFront;
+    private DcMotor intakeMotorBack;
+
     //Servos
     private Servo intakeLiftServoRight;
     private Servo intakeLiftServoLeft;
-    private Servo depositorServo;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -33,17 +33,12 @@ public class MainTeleOp extends OpMode {
         motorRight = hardwareMap.dcMotor.get("motorRight");
 
         //Intake Motor
-        intakeMotor = hardwareMap.dcMotor.get("intakeMotor");
+        intakeMotorFront = hardwareMap.dcMotor.get("intakeMotorFront");
+        intakeMotorBack = hardwareMap.dcMotor.get("intakeMotorBack");
 
         //Intake Lift Motor
         intakeLiftServoRight = hardwareMap.servo.get("intakeLiftServoRight");
         intakeLiftServoLeft = hardwareMap.servo.get("intakeLiftServoLeft");
-
-        //Depositor Servo
-        depositorServo = hardwareMap.servo.get("depositorServo");
-
-        //Elevator Motor
-        motorElevate = hardwareMap.dcMotor.get("motorElevate");
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -91,39 +86,12 @@ public class MainTeleOp extends OpMode {
                 intakeLiftServoRight.setPosition(0.5);
                 intakeLiftServoLeft.setPosition(0.5);
             }
-            /*
-            //Depositor Servo
-            if(gamepad1.dpad_up) {
-                depositorServo.setPosition(0.6);
-            }
-            else if(gamepad1.dpad_down) {
-                depositorServo.setPosition(0.4);
-            }
-            else {
-                depositorServo.setPosition(0.5);
-            }
-            */
         }
 
         //Spinning Collector Motor
         //Set power to negative to make the things go in, positive to make things go out.
-        intakeMotor.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
-
-        /*
-        //Intake Platform Elevator
-        if (motorElevate.getCurrentPosition() > 0) {
-            motorElevate.setPower(-gamepad1.right_trigger);
-        }
-        else if(motorElevate.getCurrentPosition() < -3250) {
-            motorElevate.setPower(gamepad1.left_trigger);
-        }
-        else {
-            motorElevate.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
-        }
-
-        telemetry.addData("Position", motorElevate.getCurrentPosition());
-        telemetry.update();
-        */
+        intakeMotorFront.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
+        intakeMotorBack.setPower(-(gamepad1.left_trigger-gamepad1.right_trigger));
     }
 
     /*
