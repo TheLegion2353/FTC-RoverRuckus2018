@@ -27,7 +27,7 @@ public class CraterAutonomous extends LinearOpMode {
 
     private int i = 0;
 
-    private double Pi = 3.14159265359;
+    private double Pi = Math.PI;
 
     private double diameter = 3.54331;
     private double circumfrence = diameter * Pi;
