@@ -51,6 +51,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * is explained below.
  */
 @Autonomous(name = "RobotVisionAutonomous", group = "RobotVisionAutonomous")
+@Disabled
 public class RobotVisionAutonomous extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -109,6 +110,8 @@ public class RobotVisionAutonomous extends LinearOpMode {
                 tfod.activate();
             }
 
+            int position = -1;
+
             while (opModeIsActive() && elapsedTime <= 2000) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
@@ -132,10 +135,13 @@ public class RobotVisionAutonomous extends LinearOpMode {
                             if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
                                 if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Left");
+                                    position = 0;
                                 } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
                                     telemetry.addData("Gold Mineral Position", "Right");
+                                    position = 2;
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
+                                    position = 1;
                                 }
                             }
                         }
@@ -155,29 +161,44 @@ public class RobotVisionAutonomous extends LinearOpMode {
                             }
                             if(goldMineralX == -1) {
                                 telemetry.addData("Gold Mineral Position", "Right");
+                                position = 2;
                             }
                             else if(silverMineral1X != -1){
                                 if (goldMineralX < silverMineral1X) {
                                     telemetry.addData("Gold Mineral Position", "Left");
+                                    position = 2;
                                 } else {
                                     telemetry.addData("Gold Mineral Position", "Center");
+                                    position = 1;
                                 }
                             }
+                        }
+                        if(position == -1) {
+                            telemetry.addData("Gold Mineral Position", "Unknown");
                         }
                         telemetry.update();
                         elapsedTime = System.currentTimeMillis() - startTime;
                     }
                 }
             }
-        }
 
-        if (tfod != null) {
-            tfod.shutdown();
-        }
+            if (tfod != null) {
+                tfod.shutdown();
+            }
 
-        telemetry.clearAll();
-        telemetry.addLine("Moving");
-        telemetry.update();
+            if(position == 0) {
+
+            }
+            else if(position == 1) {
+
+            }
+            else if(position == 2) {
+
+            }
+            else {
+
+            }
+        }
     }
 
     /**
